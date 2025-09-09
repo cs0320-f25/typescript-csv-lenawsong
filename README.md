@@ -71,6 +71,19 @@
 
 ### Design Choices
 
+    Correctness
+    A CSV parser is correct if it splits rows into the right number of fields, handles special cases, and handles empty lines without breaking. When a schema is provided, it should reject rows that don’t match the expected types. Without a schema, it should always return raw string arrays. Tests should check that invalid rows trigger errors and valid rows produce the right structure.
+
+    Random, On-Demand Generation
+    If I had a random CSV generator, I’d use it to create many different rows and files automatically. This would help test unusual cases I might forget, like missing values or very long strings. I could then check that the parser always returns arrays of consistent length and throws errors when data is buggy.
+
+    Overall Experience, Bugs Encountered and Resolved
+    This sprint was a good introduction to writing tests, creating files with data, and getting used to schemas. I wanted to test with different data tables and write tests in a neat and efficient way. I mostly had trouble with writing tests and the logic behind passing and failing them. For example, when Bob, thirty was tested to throw an exception, I focused on making sure the test passed, indicating that the error was thrown and the test was running as it should have. After playing around with the given code and then creating my own tests, I was able to pass all of them with the correct logic to back it up, although it did take me a while to figure out. 
+
+    Design
+    I designed parseCSV to be straightforward while still handling the main needs of a CSV parser. Inside the loop, I split each line on commas and trim the spaces, which covers most normal CSV formatting (for now). I added a quick check to skip over empty lines, since those are common in real files and shouldn’t cause errors. If no schema is passed in, the function pushes the raw array of strings to the result. If a schema is provided, the code calls schema.safeParse(values) to validate and transform the row. If the row is valid, it gets added as an object; if not, the function throws an error with the exact line number and validation message, so the caller knows exactly what went wrong and where. These choices keep the code short, clear, and flexible. It works for simple CSV parsing for the first sprint.
+
+
 ### 1340 Supplement
 
 - #### 1. Correctness
@@ -82,8 +95,11 @@
 #### Tests:
 #### How To…
 
-#### Team members and contributions (include cs logins):
-
+#### Team members and contributions (include cs logins): 
+    N/A     
 #### Collaborators (cslogins of anyone you worked with on this project and/or generative AI):
-#### Total estimated time it took to complete project: It took me 3 total hours to complete this project
-#### Link to GitHub Repo: https://github.com/cs0320-f25/typescript-csv-lenawsong
+    I worked with GitHub Copilot to help me brainstorm some of the written perspective expansion prompts. I also asked it to help me brainstorm test cases and what data I should create.
+#### Total estimated time it took to complete project: 
+    It took me 3 total hours to complete this project
+#### Link to GitHub Repo: 
+    https://github.com/cs0320-f25/typescript-csv-lenawsong
