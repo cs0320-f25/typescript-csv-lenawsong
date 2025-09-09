@@ -1,5 +1,7 @@
 import * as fs from "fs";
 import * as readline from "readline";
+// import z from "zod";
+import { z, ZodType } from "zod";
 
 /**
  * This is a JSDoc comment. Similar to JavaDoc, it documents a public-facing
